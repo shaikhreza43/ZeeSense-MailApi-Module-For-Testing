@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.5/angular.min.js"></script>
+
+<meta charset="ISO-8859-1">
+<title>Welcome To ZeeSense Systems</title>
+</head>
+<body>
+
+
+
+<div class="col-lg-12 m-t-sm m-b-sm">
+
+  <div class="panel panel-default bg-light text-primary text-left">
+    <div class="panel-body"><span class="h3 font-bold">Compose Mail</span></div>
+  </div>
+
+
+  <div ng-controller="mailApp" style="margin-bottom:0%">
+    <button class="btn btn-primary" ui-sref="app.messages">Back to Inbox </button>
+
+    <div class="pull-right m-r-lg">
+      <button type="submit" class="btn btn-primary" ng-click="sendEmail()">Send</button>
+      <button type="submit" class="btn btn-primary" ng-click="savedraft()">Save as
+        Draft </button>
+      <button type="reset" class="btn btn-default">Reset</button>
+
+
+    </div>
+
+
+  </div>
+
+  <div style="margin-left: 2%">
+
+    <!-- <label for="all">Send to All</label>
+    <input type="radio" id="all" ng-model="composemail.to"> -->
+    <br>
+    <label for="specific block">Send to Blocks</label>
+    <br>
+    <!-- <select class="bg-primary" name="specific block" id="specific block">
+      <option value="select">Select</option>
+      <option value="Block A">Block A</option>
+      <option value="Block B">Block B</option>
+      <option value="Block C">Block C</option>
+      <option value="Block D">Block D</option>
+      <option value="Block E">Block E</option>
+    </select> -->
+    <!-- <input type="checkbox" name="selectall" id="selectall" value="select all" ng-model="composemail.to" onChange="checkAll(this)">Send to all<br> -->
+    <input type="checkbox" name="selectall" id="selectall" value="select all" ng-model="all">Send to all<br>
+    <input type="checkbox" name="Block A" id="Block A" value="Block A" ng-checked="all">Block A
+    <input type="checkbox" name="Block B" id="Block B" value="Block B" ng-checked="all">Block B
+    <input type="checkbox" name="Block C" id="Block C" value="Block C" ng-checked="all">Block C
+    <input type="checkbox" name="Block D" id="Block D" value="Block D" ng-checked="all">Block D
+    <input type="checkbox" name="Block E" id="Block E" value="Block E" ng-checked="all">Block E
+    <input type="checkbox" name="Block F" id="Block F" value="Block F" ng-checked="all">Block F
+
+  </div>
+
+  <div class="col-lg-12 ">
+
+    <toaster-container toaster-options="{'position-class': 'toast-center', 'close-button':true, 'time-out': 2000}"></toaster-container>
+
+
+    <section ng-controller="mailApp">
+      <div class="compose-mail m-l-xs">
+        <form role="form-horizontal" method="post">
+          <div class="form-group">
+
+
+            <label for="to" class="control-label">To: </label>
+            <input type="email" class="form-control" style="width: 100%" placeholder="Enter Receipent's email separated with comma"
+              ng-model="composemail.to">
+            <!-- <div class="compose-options">
+              <a onclick="$(this).hide(); $('#cc').parent().removeClass('hidden'); $('#cc').focus();" href="javascript:;">Cc</a>
+              <a onclick="$(this).hide(); $('#bcc').parent().removeClass('hidden'); $('#bcc').focus();" href="javascript:;">Bcc</a>
+            </div> -->
+
+
+            <div class="compose-options">
+              <a onclick="$(this).hide(); $('#cc').parent().removeClass('hidden'); $('#cc').focus();" href="javascript:;">Cc</a>
+              <a onclick="$(this).hide(); $('#bcc').parent().removeClass('hidden'); $('#bcc').focus();" href="javascript:;">Bcc</a>
+            </div>
+          </div>
+
+
+          <div class="form-group hidden">
+            <label for="cc" class="control-label">Cc:</label>
+            <input type="text" tabindex="2" id="cc" class="form-control" ng-model="composemail.cc">
+          </div>
+
+          <div class="form-group hidden">
+            <label for="bcc" class="control-label">Bcc:</label>
+            <input type="text" tabindex="2" id="bcc" class="form-control" ng-model="composemail.bcc">
+          </div>
+
+          <div class="form-group">
+            <label for="subject" class="control-label">Subject:</label>
+            <input type="text" tabindex="1" id="subject" class="form-control" ng-model="composemail.subject">
+          </div>
+
+          <div class="form-group">
+            <label class="control-label">Attachment:</label>
+            <input ui-jq="filestyle" type="file" data-icon="false" data-classButton="btn btn-default" data-classInput="form-control inline v-middle input-s"
+              file="mesFilePath" name="mesFilePath" ng-model="mesFilePath" valid-extensions="doc,docx,xls,xlsx,pdf,tiff,zip,ppt,pptx,jpg,txt"
+              max-size={{app.imageMaxSize}}>
+          </div>
+          <!-- Message Body:
+          <textarea style="width: 100%" ng-model="composemail.body" name="messagebox" id="messagebox" cols="80" rows="10"></textarea> -->
+
+          <div class="form-group">
+            <label class="control-label">Message Body:</label>
+            <div class="col-lg-14">
+              <div class="btn-toolbar m-b-sm btn-editor" data-role="editor-toolbar" data-target="#editor">
+                <div class="btn-group dropdown" dropdown>
+                  <a class="btn btn-default" dropdown-toggle tooltip="Font"><i class="fa fa-font"></i>
+                    <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href data-edit="fontName Serif" style="font-family:'Serif'">Serif</a></li>
+                    <li><a href data-edit="fontName Sans" style="font-family:'Sans'">Sans</a></li>
+                    <li><a href data-edit="fontName Arial" style="font-family:'Arial'">Arial</a></li>
+                  </ul>
+                </div>
+                <div class="btn-group dropdown" dropdown>
+                  <a class="btn btn-default" dropdown-toggle data-toggle="dropdown" tooltip="Font Size">
+                    <i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href data-edit="fontSize 5" style="font-size:24px">Huge</a></li>
+                    <li><a href data-edit="fontSize 3" style="font-size:18px">Normal</a></li>
+                    <li><a href data-edit="fontSize 1" style="font-size:14px">Small</a></li>
+                  </ul>
+                </div>
+                <div class="btn-group">
+                  <a class="btn btn-default" data-edit="bold" tooltip="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
+                  <a class="btn btn-default" data-edit="italic" tooltip="Italic (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
+                  <a class="btn btn-default" data-edit="strikethrough" tooltip="Strikethrough"><i class="fa fa-strikethrough"></i></a>
+                  <a class="btn btn-default" data-edit="underline" tooltip="Underline (Ctrl/Cmd+U)"><i class="fa fa-underline"></i></a>
+                </div>
+                <div class="btn-group">
+                  <a class="btn btn-default" data-edit="insertunorderedlist" tooltip="Bullet list"><i class="fa fa-list-ul"></i></a>
+                  <a class="btn btn-default" data-edit="insertorderedlist" tooltip="Number list"><i class="fa fa-list-ol"></i></a>
+                  <a class="btn btn-default" data-edit="outdent" tooltip="Reduce indent (Shift+Tab)"><i class="fa fa-dedent"></i></a>
+                  <a class="btn btn-default" data-edit="indent" tooltip="Indent (Tab)"><i class="fa fa-indent"></i></a>
+                </div>
+                <div class="btn-group">
+                  <a class="btn btn-default" data-edit="justifyleft" tooltip="Align Left (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
+                  <a class="btn btn-default" data-edit="justifycenter" tooltip="Center (Ctrl/Cmd+E)"><i class="fa fa-align-center"></i></a>
+                  <a class="btn btn-default" data-edit="justifyright" tooltip="Align Right (Ctrl/Cmd+R)"><i class="fa fa-align-right"></i></a>
+                  <a class="btn btn-default" data-edit="justifyfull" tooltip="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
+                </div>
+                <div class="btn-group dropdown" dropdown>
+                  <a class="btn btn-default" dropdown-toggle tooltip="Hyperlink"><i class="fa fa-link"></i></a>
+                  <div class="dropdown-menu">
+                    <div class="input-group m-l-xs m-r-xs">
+                      <input class="form-control input-sm" id="LinkInput" placeholder="URL" type="text" data-edit="createLink" />
+                      <div class="input-group-btn">
+                        <button class="btn btn-sm btn-default" type="button">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                  <a class="btn btn-default" data-edit="unlink" tooltip="Remove Hyperlink"><i class="fa fa-cut"></i></a>
+                </div>
+
+                <div class="btn-group">
+                  <a class="btn btn-default" tooltip="Insert picture (or just drag & drop)" id="pictureBtn"><i class="fa fa-picture-o"></i></a>
+                  <input type="file" data-edit="insertImage" style="position:absolute; opacity:0; width:41px; height:34px" />
+                </div>
+                <div class="btn-group">
+                  <a class="btn btn-default" data-edit="undo" tooltip="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
+                  <a class="btn btn-default" data-edit="redo" tooltip="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
+                </div>
+              </div>
+              <div ui-jq="wysiwyg" class="col-lg-12 form-control" style="overflow:scroll;height:200px;max-height:200px;max-width: 100%">
+                Type Your Message here&hellip;
+              </div>
+            </div>
+          </div>
+
+
+          <div class="m-t-lg" ng-controller="mailApp">
+            <input type="submit" class="btn btn-primary" value="Send" ng-click="sendEmail()">
+            <input type="submit" class="btn btn-primary" value="Save as Draft" ng-click="savedraft()">
+            <input type="reset" class="btn btn-default" value="Reset">
+
+          </div>
+
+        </form>
+
+      </div>
+    </section>
+
+  </div>
+
+
+</div>
+<script src="composemail.js"></script>
+
+</body>
+</html>
